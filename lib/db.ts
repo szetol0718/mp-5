@@ -8,7 +8,6 @@ if (!MONGODB_URI) {
   throw new Error("MONGODB_URI environment variable is missing");
 }
 
-let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
 
 async function connect(): Promise<Db> {
@@ -18,7 +17,6 @@ async function connect(): Promise<Db> {
   await client.connect();
 
   const db = client.db(DB_NAME);
-  cachedClient = client;
   cachedDb = db;
 
   return db;

@@ -6,7 +6,8 @@ export async function POST(req: Request) {
     const { url, alias } = await req.json();
     await createNewLink(url, alias);
     return NextResponse.json({ message: "Created successfully" }, { status: 201 });
-  } catch (err: any) {
-    return NextResponse.json({ error: err.message }, { status: 400 });
+  } catch (err) {
+    const error = err instanceof Error ? err : new Error("Unknown error");
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
 }

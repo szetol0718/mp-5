@@ -1,8 +1,14 @@
 import NewLinkForm from "@/components/NewLinkForm";
 import getAllLinks from "@/lib/getAllLinks";
 
+interface Link {
+  _id: string;
+  alias: string;
+  url: string;
+}
+
 export default async function Home() {
-  const links = await getAllLinks();
+  const links = (await getAllLinks()) as unknown as Link[];
 
   return (
     <main className="min-h-screen bg-gray-100 p-6">
@@ -15,7 +21,7 @@ export default async function Home() {
           <div className="pt-6 border-t">
             <h2 className="text-xl font-semibold mb-3">Existing Short Links</h2>
             <ul className="space-y-2">
-              {links.map((link: any) => (
+              {links.map((link: Link) => (
                 <li key={link._id} className="border p-3 rounded bg-gray-50">
                   <a
                     href={`/r/${link.alias}`}
